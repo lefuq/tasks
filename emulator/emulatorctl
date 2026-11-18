@@ -1,0 +1,15 @@
+#!/bin/sh
+set -eu
+base=${EMULATOR_URL:-http://localhost:8090}
+action=${1:?health|settings|configure|reset|inspect|result|submit}
+shift
+case "$action" in
+    health) curl --fail-with-body -sS "$base/actuator/health" ;;
+    settings) curl --fail-with-body -sS "$base/admin/workers/${1:?worker}" ;;
+    configure) curl --fail-with-body -sS -X PUT "$base/admin/workers/${1:?worker}" -H 'Content-Type: application/json' --data "{\"fault\":\"${2:?fault}\",\"outcome\":\"${3:?outcome}\"}" ;;
+    reset) curl --fail-with-body -sS -X DELETE "$base/admin/workers/${1:?worker}" ;;
+    inspect) curl --fail-with-body -sS "$base/admin/operations/${1:?id}" ;;
+    result) curl --fail-with-body -sS --max-time 5 "$base/workers/${1:?worker}/operations/${2:?id}" ;;
+    submit) curl --fail-with-body -sS -X POST "$base/workers/${1:?worker}/operations" -H "Idempotency-Key: ${2:?key}" -H 'Content-Type: application/json' --data-binary "@${3:?json-file}" ;;
+    *) exit 2 ;;
+esac

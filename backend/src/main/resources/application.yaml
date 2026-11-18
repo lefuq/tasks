@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: ${APP_DB_URL}
+    username: ${APP_DB_USER}
+    password: ${APP_DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 10
+  session:
+    jdbc:
+      initialize-schema: never
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+server:
+  servlet:
+    session:
+      timeout: 30m
+      cookie:
+        http-only: true
+        same-site: strict
+        secure: ${APP_SECURE_COOKIE:false}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+app:
+  exchange-enabled: ${APP_EXCHANGE_ENABLED:true}

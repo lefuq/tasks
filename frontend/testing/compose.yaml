@@ -1,0 +1,58 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: frontend_test
+      POSTGRES_USER: frontend_test
+      POSTGRES_PASSWORD: isolated-test-only
+    tmpfs: /var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U frontend_test -d frontend_test]
+      interval: 1s
+      timeout: 2s
+      retries: 40
+  emulator-postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: emulator_test
+      POSTGRES_USER: emulator_test
+      POSTGRES_PASSWORD: isolated-test-only
+    tmpfs: /var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U emulator_test -d emulator_test]
+      interval: 1s
+      timeout: 2s
+      retries: 40
+  backend:
+    build: ../../backend
+    environment:
+      APP_DB_URL: jdbc:postgresql://postgres:5432/frontend_test
+      APP_DB_USER: frontend_test
+      APP_DB_PASSWORD: isolated-test-only
+      APP_COMMAND_PASSWORD: isolated-demo-only
+      APP_SECURE_COOKIE: 'false'
+      APP_EXCHANGE_ENABLED: 'true'
+    ports: ['127.0.0.1::8080']
+    depends_on:
+      postgres:
+        condition: service_healthy
+  emulator:
+    build: ../../emulator
+    environment:
+      EMULATOR_DB_URL: jdbc:postgresql://emulator-postgres:5432/emulator_test
+      EMULATOR_DB_USER: emulator_test
+      EMULATOR_DB_PASSWORD: isolated-test-only
+    ports: ['127.0.0.1::8090']
+    depends_on:
+      emulator-postgres:
+        condition: service_healthy
+  contradiction-proxy:
+    build:
+      context: .
+      dockerfile: Dockerfile.proxy
+    environment:
+      EMULATOR_URL: http://emulator:8090
+    ports: ['127.0.0.1::8091']
+    depends_on:
+      emulator:
+        condition: service_started

@@ -1,0 +1,1142 @@
+---
+openapi: 3.0.3
+info:
+  title: Exchange backend API
+  version: 1.0.0
+  description: Local same-origin HTTP session, HttpOnly SameSite=Strict SESSION cookie
+    and synchronizer CSRF token. UTC timestamps. Public external emulator DTOs use
+    processing_time; application Result DTO uses processingTime. No callback endpoints.
+servers:
+- url: http://localhost:8080
+security:
+- session: []
+paths:
+  "/api/session":
+    post:
+      operationId: login
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Actor"
+          headers:
+            X-CSRF-TOKEN:
+              schema:
+                type: string
+              description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+        '400':
+          "$ref": "#/components/responses/Error400"
+        '401':
+          "$ref": "#/components/responses/Error401"
+        '403':
+          "$ref": "#/components/responses/Error403"
+        '404':
+          "$ref": "#/components/responses/Error404"
+        '409':
+          "$ref": "#/components/responses/Error409"
+        '422':
+          "$ref": "#/components/responses/Error422"
+        '500':
+          "$ref": "#/components/responses/Error500"
+      parameters:
+      - "$ref": "#/components/parameters/CsrfToken"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Login"
+      security: []
+    delete:
+      operationId: logout
+      responses:
+        '204':
+          description: No content
+          headers:
+            X-CSRF-TOKEN:
+              schema:
+                type: string
+              description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+        '400':
+          "$ref": "#/components/responses/Error400"
+        '401':
+          "$ref": "#/components/responses/Error401"
+        '403':
+          "$ref": "#/components/responses/Error403"
+        '404':
+          "$ref": "#/components/responses/Error404"
+        '409':
+          "$ref": "#/components/responses/Error409"
+        '422':
+          "$ref": "#/components/responses/Error422"
+        '500':
+          "$ref": "#/components/responses/Error500"
+      parameters:
+      - "$ref": "#/components/parameters/CsrfToken"
+  "/api/me":
+    get:
+      operationId: me
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Actor"
+          headers:
+            X-CSRF-TOKEN:
+              schema:
+                type: string
+              description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+        '400':
+          "$ref": "#/components/responses/Error400"
+        '401':
+          "$ref": "#/components/responses/Error401"
+        '403':
+          "$ref": "#/components/responses/Error403"
+        '404':
+          "$ref": "#/components/responses/Error404"
+        '409':
+          "$ref": "#/components/responses/Error409"
+        '422':
+          "$ref": "#/components/responses/Error422"
+        '500':
+          "$ref": "#/components/responses/Error500"
+      description: Call before login to obtain X-CSRF-TOKEN and SESSION cookie. Successful
+        login rotates the session ID. Sessions are persisted in PostgreSQL and expire
+        after 30 idle minutes.
+      security: []
+  "/api/workers":
+    get:
+      operationId: workers
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Worker"
+          headers:
+            X-CSRF-TOKEN:
+              schema:
+                type: string
+              description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+        '400':
+          "$ref": "#/components/responses/Error400"
+        '401':
+          "$ref": "#/components/responses/Error401"
+        '403':
+          "$ref": "#/components/responses/Error403"
+        '404':
+          "$ref": "#/components/responses/Error404"
+        '409':
+          "$ref": "#/components/responses/Error409"
+        '422':
+          "$ref": "#/components/responses/Error422"
+        '500':
+          "$ref": "#/components/responses/Error500"
+  "/api/task-types":
+    get:
+      operationId: taskTypes
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/TaskType"
+          headers:
+            X-CSRF-TOKEN:
+              schema:
+                type: string
+              description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+        '400':
+          "$ref": "#/components/responses/Error400"
+        '401':
+          "$ref": "#/components/responses/Error401"
+        '403':
+          "$ref": "#/components/responses/Error403"
+        '404':
+          "$ref": "#/components/responses/Error404"
+        '409':
+          "$ref": "#/components/responses/Error409"
+        '422':
+          "$ref": "#/components/responses/Error422"
+        '500':
+          "$ref": "#/components/responses/Error500"
+  "/api/tasks":
+    get:
+      operationId: tasks
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/TaskPage"
+          headers:
+            X-CSRF-TOKEN:
+              schema:
+                type: string
+              description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+        '400':
+          "$ref": "#/components/responses/Error400"
+        '401':
+          "$ref": "#/components/responses/Error401"
+        '403':
+          "$ref": "#/components/responses/Error403"
+        '404':
+          "$ref": "#/components/responses/Error404"
+        '409':
+          "$ref": "#/components/responses/Error409"
+        '422':
+          "$ref": "#/components/responses/Error422"
+        '500':
+          "$ref": "#/components/responses/Error500"
+      parameters:
+      - name: type
+        in: query
+        schema:
+          "$ref": "#/components/schemas/Type"
+      - name: page
+        in: query
+        schema:
+          type: integer
+          minimum: 0
+          default: 0
+      - name: size
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      description: Sorted by descending ID. Initiators see their own tasks; operators
+        see their service tasks.
+    post:
+      operationId: createTask
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Task"
+          headers:
+            X-CSRF-TOKEN:
+              schema:
+                type: string
+              description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+        '400':
+          "$ref": "#/components/responses/Error400"
+        '401':
+          "$ref": "#/components/responses/Error401"
+        '403':
+          "$ref": "#/components/responses/Error403"
+        '404':
+          "$ref": "#/components/responses/Error404"
+        '409':
+          "$ref": "#/components/responses/Error409"
+        '422':
+          "$ref": "#/components/responses/Error422"
+        '500':
+          "$ref": "#/components/responses/Error500"
+      parameters:
+      - "$ref": "#/components/parameters/IdempotencyKey"
+      - "$ref": "#/components/parameters/CsrfToken"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Create"
+  "/api/tasks/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+    get:
+      operationId: task
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Task"
+          headers:
+            X-CSRF-TOKEN:
+              schema:
+                type: string
+              description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+        '400':
+          "$ref": "#/components/responses/Error400"
+        '401':
+          "$ref": "#/components/responses/Error401"
+        '403':
+          "$ref": "#/components/responses/Error403"
+        '404':
+          "$ref": "#/components/responses/Error404"
+        '409':
+          "$ref": "#/components/responses/Error409"
+        '422':
+          "$ref": "#/components/responses/Error422"
+        '500':
+          "$ref": "#/components/responses/Error500"
+    patch:
+      operationId: editTask
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Task"
+          headers:
+            X-CSRF-TOKEN:
+              schema:
+                type: string
+              description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+        '400':
+          "$ref": "#/components/responses/Error400"
+        '401':
+          "$ref": "#/components/responses/Error401"
+        '403':
+          "$ref": "#/components/responses/Error403"
+        '404':
+          "$ref": "#/components/responses/Error404"
+        '409':
+          "$ref": "#/components/responses/Error409"
+        '422':
+          "$ref": "#/components/responses/Error422"
+        '500':
+          "$ref": "#/components/responses/Error500"
+      parameters:
+      - "$ref": "#/components/parameters/IdempotencyKey"
+      - "$ref": "#/components/parameters/CsrfToken"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Edit"
+      description: Save after RETURNED restores the previous operator even when fields
+        are unchanged.
+  "/api/tasks/{id}/worker":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+    put:
+      operationId: selectWorker
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Task"
+          headers:
+            X-CSRF-TOKEN:
+              schema:
+                type: string
+              description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+        '400':
+          "$ref": "#/components/responses/Error400"
+        '401':
+          "$ref": "#/components/responses/Error401"
+        '403':
+          "$ref": "#/components/responses/Error403"
+        '404':
+          "$ref": "#/components/responses/Error404"
+        '409':
+          "$ref": "#/components/responses/Error409"
+        '422':
+          "$ref": "#/components/responses/Error422"
+        '500':
+          "$ref": "#/components/responses/Error500"
+      parameters:
+      - "$ref": "#/components/parameters/IdempotencyKey"
+      - "$ref": "#/components/parameters/CsrfToken"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/SelectWorker"
+  "/api/tasks/{id}/history":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+    get:
+      operationId: history
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/History"
+          headers:
+            X-CSRF-TOKEN:
+              schema:
+                type: string
+              description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+        '400':
+          "$ref": "#/components/responses/Error400"
+        '401':
+          "$ref": "#/components/responses/Error401"
+        '403':
+          "$ref": "#/components/responses/Error403"
+        '404':
+          "$ref": "#/components/responses/Error404"
+        '409':
+          "$ref": "#/components/responses/Error409"
+        '422':
+          "$ref": "#/components/responses/Error422"
+        '500':
+          "$ref": "#/components/responses/Error500"
+  "/api/tasks/{id}/result/file":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+    get:
+      operationId: downloadFile
+      responses:
+        '200':
+          description: Attachment task-{id}.md. Empty fail file is supported.
+          headers:
+            Content-Disposition:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
+            X-CSRF-TOKEN:
+              schema:
+                type: string
+              description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '400':
+          "$ref": "#/components/responses/Error400"
+        '401':
+          "$ref": "#/components/responses/Error401"
+        '403':
+          "$ref": "#/components/responses/Error403"
+        '404':
+          "$ref": "#/components/responses/Error404"
+        '409':
+          "$ref": "#/components/responses/Error409"
+        '422':
+          "$ref": "#/components/responses/Error422"
+        '500':
+          "$ref": "#/components/responses/Error500"
+  "/api/problems":
+    get:
+      operationId: problems
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Task"
+          headers:
+            X-CSRF-TOKEN:
+              schema:
+                type: string
+              description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+        '400':
+          "$ref": "#/components/responses/Error400"
+        '401':
+          "$ref": "#/components/responses/Error401"
+        '403':
+          "$ref": "#/components/responses/Error403"
+        '404':
+          "$ref": "#/components/responses/Error404"
+        '409':
+          "$ref": "#/components/responses/Error409"
+        '422':
+          "$ref": "#/components/responses/Error422"
+        '500':
+          "$ref": "#/components/responses/Error500"
+      description: Tasks with unresolved problems within readable scope. All problem
+        observations and decisions are in task history, including previous operations.
+  "/api/tasks/{id}/send":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+    post:
+      operationId: sendTask
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Task"
+          headers:
+            X-CSRF-TOKEN:
+              schema:
+                type: string
+              description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+        '400':
+          "$ref": "#/components/responses/Error400"
+        '401':
+          "$ref": "#/components/responses/Error401"
+        '403':
+          "$ref": "#/components/responses/Error403"
+        '404':
+          "$ref": "#/components/responses/Error404"
+        '409':
+          "$ref": "#/components/responses/Error409"
+        '422':
+          "$ref": "#/components/responses/Error422"
+        '500':
+          "$ref": "#/components/responses/Error500"
+      parameters:
+      - "$ref": "#/components/parameters/IdempotencyKey"
+      - "$ref": "#/components/parameters/CsrfToken"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Version"
+  "/api/tasks/{id}/retry":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+    post:
+      operationId: retryTask
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Task"
+          headers:
+            X-CSRF-TOKEN:
+              schema:
+                type: string
+              description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+        '400':
+          "$ref": "#/components/responses/Error400"
+        '401':
+          "$ref": "#/components/responses/Error401"
+        '403':
+          "$ref": "#/components/responses/Error403"
+        '404':
+          "$ref": "#/components/responses/Error404"
+        '409':
+          "$ref": "#/components/responses/Error409"
+        '422':
+          "$ref": "#/components/responses/Error422"
+        '500':
+          "$ref": "#/components/responses/Error500"
+      parameters:
+      - "$ref": "#/components/parameters/IdempotencyKey"
+      - "$ref": "#/components/parameters/CsrfToken"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Version"
+  "/api/tasks/{id}/return":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+    post:
+      operationId: returnTask
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Task"
+          headers:
+            X-CSRF-TOKEN:
+              schema:
+                type: string
+              description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+        '400':
+          "$ref": "#/components/responses/Error400"
+        '401':
+          "$ref": "#/components/responses/Error401"
+        '403':
+          "$ref": "#/components/responses/Error403"
+        '404':
+          "$ref": "#/components/responses/Error404"
+        '409':
+          "$ref": "#/components/responses/Error409"
+        '422':
+          "$ref": "#/components/responses/Error422"
+        '500':
+          "$ref": "#/components/responses/Error500"
+      parameters:
+      - "$ref": "#/components/parameters/IdempotencyKey"
+      - "$ref": "#/components/parameters/CsrfToken"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Version"
+  "/api/tasks/{id}/accept":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+    post:
+      operationId: acceptTask
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Task"
+          headers:
+            X-CSRF-TOKEN:
+              schema:
+                type: string
+              description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+        '400':
+          "$ref": "#/components/responses/Error400"
+        '401':
+          "$ref": "#/components/responses/Error401"
+        '403':
+          "$ref": "#/components/responses/Error403"
+        '404':
+          "$ref": "#/components/responses/Error404"
+        '409':
+          "$ref": "#/components/responses/Error409"
+        '422':
+          "$ref": "#/components/responses/Error422"
+        '500':
+          "$ref": "#/components/responses/Error500"
+      parameters:
+      - "$ref": "#/components/parameters/IdempotencyKey"
+      - "$ref": "#/components/parameters/CsrfToken"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Version"
+  "/api/tasks/{id}/reconcile":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+    post:
+      operationId: reconcileTask
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Task"
+          headers:
+            X-CSRF-TOKEN:
+              schema:
+                type: string
+              description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+        '400':
+          "$ref": "#/components/responses/Error400"
+        '401':
+          "$ref": "#/components/responses/Error401"
+        '403':
+          "$ref": "#/components/responses/Error403"
+        '404':
+          "$ref": "#/components/responses/Error404"
+        '409':
+          "$ref": "#/components/responses/Error409"
+        '422':
+          "$ref": "#/components/responses/Error422"
+        '500':
+          "$ref": "#/components/responses/Error500"
+      parameters:
+      - "$ref": "#/components/parameters/IdempotencyKey"
+      - "$ref": "#/components/parameters/CsrfToken"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Version"
+      description: Enqueues manual reconciliation. Completed tasks retain the accepted
+        result. Any subsequent matching manual or automatic reconciliation resolves
+        open problems while preserving both observations and history.
+components:
+  securitySchemes:
+    session:
+      type: apiKey
+      in: cookie
+      name: SESSION
+  schemas:
+    Type:
+      type: string
+      enum:
+      - process
+      - research
+      - collect
+    State:
+      type: string
+      enum:
+      - NEW
+      - WAITING_TO_SEND
+      - EXECUTING
+      - AWAITING_ACCEPTANCE
+      - RETURNED
+      - COMPLETED
+    Exchange:
+      type: string
+      nullable: true
+      enum:
+      - PENDING
+      - DELIVERING
+      - ACKNOWLEDGED
+      - UNKNOWN
+      - RETRY_WAIT
+      - NEEDS_REVIEW
+      - 
+    Problem:
+      type: string
+      nullable: true
+      enum:
+      - TEMPORARY
+      - EXHAUSTED
+      - INVALID_RESULT
+      - CONTRACT
+      - LOST_RESULT
+      - MISMATCH
+      - 
+    Actor:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+        serviceId:
+          type: integer
+          format: int64
+        role:
+          type: string
+          enum:
+          - INITIATOR
+          - OPERATOR
+        name:
+          type: string
+      required:
+      - id
+      - serviceId
+      - role
+      - name
+    Login:
+      type: object
+      additionalProperties: false
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          format: password
+      required:
+      - username
+      - password
+    Error:
+      type: object
+      additionalProperties: false
+      properties:
+        code:
+          type: string
+          description: Unauthorized, Forbidden, NotFound, MissingFields, MalformedRequest,
+            Validation, VersionConflict, IdempotencyConflict, InvalidState, WorkerRequired,
+            ServerError
+      required:
+      - code
+    TaskType:
+      type: object
+      additionalProperties: false
+      properties:
+        code:
+          "$ref": "#/components/schemas/Type"
+        name:
+          type: string
+      required:
+      - code
+      - name
+    Worker:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+      required:
+      - id
+      - name
+    Create:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          description: Before validation trim Unicode whitespace at both ends; immutable
+            after creation. Only Latin/Cyrillic letters, Ёё, digits, dot, hyphen and
+            underscore; 1–100 characters after trim.
+        description:
+          type: string
+          maxLength: 1000
+        type:
+          "$ref": "#/components/schemas/Type"
+      required:
+      - name
+      - description
+      - type
+    Version:
+      type: object
+      additionalProperties: false
+      properties:
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+      required:
+      - version
+    Edit:
+      type: object
+      additionalProperties: false
+      properties:
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+        description:
+          type: string
+          maxLength: 1000
+        type:
+          "$ref": "#/components/schemas/Type"
+      required:
+      - version
+      - description
+      - type
+    SelectWorker:
+      type: object
+      additionalProperties: false
+      properties:
+        version:
+          type: integer
+          format: int64
+          minimum: 0
+        workerId:
+          type: integer
+          format: int64
+      required:
+      - version
+      - workerId
+    Result:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+          - success
+          - fail
+        processingTime:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Whole seconds; duration rather than a timestamp.
+        data:
+          type: string
+          format: byte
+          description: Base64, decoded limit 102400 bytes; empty fail is valid.
+      required:
+      - id
+      - status
+      - processingTime
+      - data
+    History:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+        at:
+          type: string
+          format: date-time
+          description: UTC, suffix Z
+        actorId:
+          type: integer
+          format: int64
+          nullable: true
+        action:
+          type: string
+        details:
+          type: string
+          description: JSON-encoded details, including operation IDs, attempts, both
+            observations, reconciliation and decisions. System actions have null actorId.
+      required:
+      - id
+      - at
+      - actorId
+      - action
+      - details
+    Task:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          "$ref": "#/components/schemas/Type"
+        typeName:
+          type: string
+        state:
+          "$ref": "#/components/schemas/State"
+        version:
+          type: integer
+          format: int64
+        authorId:
+          type: integer
+          format: int64
+        operatorId:
+          type: integer
+          format: int64
+          nullable: true
+        workerId:
+          type: integer
+          format: int64
+          nullable: true
+        operationId:
+          type: string
+          format: uuid
+          nullable: true
+        exchange:
+          "$ref": "#/components/schemas/Exchange"
+        problem:
+          "$ref": "#/components/schemas/Problem"
+        externalId:
+          type: string
+          nullable: true
+        result:
+          allOf:
+          - "$ref": "#/components/schemas/Result"
+          nullable: true
+          type: object
+        actions:
+          type: array
+          items:
+            type: string
+            enum:
+            - edit
+            - worker
+            - send
+            - retry
+            - return
+            - accept
+            - reconcile
+          description: Server-authorized commands. send after LOST_RESULT creates
+            a new operation/key; retry preserves the operation/key. Completed tasks
+            allow reconciliation only; the accepted result never changes.
+      required:
+      - id
+      - name
+      - description
+      - type
+      - typeName
+      - state
+      - version
+      - authorId
+      - operatorId
+      - workerId
+      - operationId
+      - exchange
+      - problem
+      - externalId
+      - result
+      - actions
+    TaskPage:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Task"
+        total:
+          type: integer
+          format: int64
+        page:
+          type: integer
+          minimum: 0
+        size:
+          type: integer
+          minimum: 1
+          maximum: 100
+      required:
+      - items
+      - total
+      - page
+      - size
+  responses:
+    Error400:
+      description: Malformed request
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/Error"
+      headers:
+        X-CSRF-TOKEN:
+          schema:
+            type: string
+          description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+    Error401:
+      description: Authentication required; GET /api/me still returns a CSRF header
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/Error"
+      headers:
+        X-CSRF-TOKEN:
+          schema:
+            type: string
+          description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+    Error403:
+      description: Role, scope, ownership, assignment or CSRF violation
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/Error"
+      headers:
+        X-CSRF-TOKEN:
+          schema:
+            type: string
+          description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+    Error404:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/Error"
+      headers:
+        X-CSRF-TOKEN:
+          schema:
+            type: string
+          description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+    Error409:
+      description: State, optimistic version or idempotency conflict
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/Error"
+      headers:
+        X-CSRF-TOKEN:
+          schema:
+            type: string
+          description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+    Error422:
+      description: Missing fields or invalid values
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/Error"
+      headers:
+        X-CSRF-TOKEN:
+          schema:
+            type: string
+          description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+    Error500:
+      description: Server error
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/Error"
+      headers:
+        X-CSRF-TOKEN:
+          schema:
+            type: string
+          description: Session CSRF token; resend as X-CSRF-TOKEN on mutations.
+  parameters:
+    CsrfToken:
+      name: X-CSRF-TOKEN
+      in: header
+      required: true
+      schema:
+        type: string
+      description: Obtain from GET /api/me, including its 401 response; retain SESSION
+        cookie.
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 200
+      description: Unique per independent action within one user. Identical retry
+        returns the original response; changed action/body with same key returns 409.

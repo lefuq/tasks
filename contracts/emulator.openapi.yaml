@@ -1,0 +1,239 @@
+openapi: 3.0.3
+info:
+  title: External emulator
+  version: 1.0.0
+  description: >-
+    Each worker uses the same PostgreSQL registry. Worker endpoints are the server URL,
+    /workers/worker-1 and /workers/worker-2 (any named endpoint shares the registry).
+    There is no lookup by idempotency key. Admin inspection bypasses delivery faults.
+servers:
+  - url: http://localhost:8090
+  - url: http://localhost:8090/workers/worker-1
+  - url: http://localhost:8090/workers/worker-2
+paths:
+  /operations:
+    post:
+      operationId: acceptOperation
+      parameters:
+        - in: header
+          name: Idempotency-Key
+          required: true
+          schema: {type: string, minLength: 1}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/Submission'}
+      responses:
+        '202':
+          description: Accepted immediately; identical repeat returns the original ID and timer.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Accepted'}
+        '400': {$ref: '#/components/responses/Malformed'}
+        '422': {$ref: '#/components/responses/Missing'}
+        '409':
+          description: Key already belongs to different content; stored operation is unchanged.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Error'}
+        '500': {$ref: '#/components/responses/ServerError'}
+        '503': {$ref: '#/components/responses/Unavailable'}
+  /operations/{id}:
+    parameters:
+      - {$ref: '#/components/parameters/Id'}
+    get:
+      operationId: getResult
+      responses:
+        '202':
+          description: Running; same ID, no result yet.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Accepted'}
+        '200':
+          description: Saved result; configured delivery corruption can intentionally violate this schema.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Result'}
+        '404':
+          description: Unknown operation ID, or lost_result mode on this worker even for an existing ID. Stored state is preserved.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Error'}
+        '500': {$ref: '#/components/responses/ServerError'}
+        '503': {$ref: '#/components/responses/Unavailable'}
+        '504':
+          description: lose_response waits 6 seconds asynchronously, exceeding the client's 5 second deadline.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Error'}
+  /admin/operations/{id}:
+    servers: [{url: 'http://localhost:8090'}]
+    parameters:
+      - {$ref: '#/components/parameters/Id'}
+    get:
+      operationId: inspectOperation
+      responses:
+        '200':
+          description: Independent persisted operation and uncorrupted result.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Inspection'}
+        '404': {$ref: '#/components/responses/Unknown'}
+        '500': {$ref: '#/components/responses/ServerError'}
+  /admin/workers/{worker}:
+    servers: [{url: 'http://localhost:8090'}]
+    parameters:
+      - in: path
+        name: worker
+        required: true
+        schema: {type: string, minLength: 1}
+    get:
+      operationId: getSettings
+      responses:
+        '200':
+          description: Persistent configuration, normal/random if never configured.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Settings'}
+        '500': {$ref: '#/components/responses/ServerError'}
+    put:
+      operationId: configureWorker
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/Settings'}
+      responses:
+        '200':
+          description: Full replacement; outcome applies to new operations only, faults apply to delivery.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Settings'}
+        '400': {$ref: '#/components/responses/Malformed'}
+        '422': {$ref: '#/components/responses/Missing'}
+        '500': {$ref: '#/components/responses/ServerError'}
+    delete:
+      operationId: resetWorker
+      responses:
+        '200':
+          description: Restore normal/random without changing existing operations or results.
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Settings'}
+        '500': {$ref: '#/components/responses/ServerError'}
+  /actuator/health:
+    servers: [{url: 'http://localhost:8090'}]
+    get:
+      operationId: health
+      responses:
+        '200':
+          description: Service and PostgreSQL are available.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status]
+                properties:
+                  status: {type: string, enum: [UP]}
+        '503': {description: Service or PostgreSQL unavailable.}
+components:
+  parameters:
+    Id:
+      in: path
+      name: id
+      required: true
+      schema: {type: string, format: uuid}
+  responses:
+    Malformed:
+      description: Malformed JSON or body structure.
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
+    Missing:
+      description: Missing required fields or idempotency key.
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
+    Unknown:
+      description: Unknown operation ID.
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
+    Unavailable:
+      description: Worker unavailable mode; admin remains available and execution continues.
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
+    ServerError:
+      description: ServerError, including invalid name, description length or operation type (C03).
+      content:
+        application/json:
+          schema: {$ref: '#/components/schemas/Error'}
+  schemas:
+    Submission:
+      type: object
+      additionalProperties: false
+      required: [name, description, type]
+      properties:
+        name:
+          type: string
+          description: Trimmed before validation and snapshot comparison.
+          minLength: 1
+          maxLength: 100
+          pattern: '^[A-Za-zА-Яа-яЁё0-9_.-]+$'
+        description: {type: string, maxLength: 1000}
+        type: {type: string, enum: [process, research, collect]}
+    Accepted:
+      type: object
+      required: [id]
+      properties:
+        id: {type: string, format: uuid}
+    Result:
+      type: object
+      required: [id, status, processing_time, data]
+      properties:
+        id: {type: string, format: uuid}
+        status: {type: string, enum: [success, fail]}
+        processing_time:
+          type: integer
+          format: int64
+          minimum: 0
+          description: finished_at epoch seconds minus started_at epoch seconds, each truncated separately, downtime included.
+        data:
+          type: string
+          format: byte
+          maxLength: 136536
+          description: Base64 Lorem Ipsum, decoded size <=102400 bytes; empty for fail. Download extension .md.
+    Settings:
+      type: object
+      additionalProperties: false
+      required: [fault, outcome]
+      properties:
+        fault:
+          type: string
+          enum: [normal, unavailable, lose_response, lost_result, invalid_json, unknown_status, wrong_id, negative_time, fractional_time, invalid_base64, oversized_data]
+        outcome:
+          type: string
+          enum: [random, success, fail]
+          description: random selects 20% fail and 80% success independently of task type.
+    Inspection:
+      type: object
+      required: [id, snapshot, worker, state, execution_count, started_at, ready_at, finished_at, result]
+      properties:
+        id: {type: string, format: uuid}
+        snapshot: {$ref: '#/components/schemas/Submission'}
+        worker: {type: string}
+        state: {type: string, enum: [running, completed]}
+        execution_count: {type: integer, enum: [1]}
+        started_at: {type: string, format: date-time}
+        ready_at: {type: string, format: date-time}
+        finished_at: {type: string, format: date-time, nullable: true}
+        result:
+          allOf: [{$ref: '#/components/schemas/Result'}]
+          nullable: true
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error: {type: string}

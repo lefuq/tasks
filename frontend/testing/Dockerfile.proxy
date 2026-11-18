@@ -1,0 +1,4 @@
+FROM python:3.13-alpine
+WORKDIR /app
+COPY contradiction-proxy.py /app/proxy.py
+CMD ["python", "/app/proxy.py"]

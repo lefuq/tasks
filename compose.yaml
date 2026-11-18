@@ -1,0 +1,102 @@
+name: tz-backend
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: exchange
+      POSTGRES_USER: exchange
+      POSTGRES_PASSWORD: ${APP_DB_PASSWORD:?Set APP_DB_PASSWORD for the new project database}
+    volumes:
+      - backend-postgres:/var/lib/postgresql/data
+    cpus: 0.50
+    mem_limit: 1024m
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U exchange -d exchange']
+      interval: 2s
+      timeout: 2s
+      retries: 30
+  backend:
+    build: ./backend
+    environment:
+      APP_DB_URL: jdbc:postgresql://postgres:5432/exchange
+      APP_DB_USER: exchange
+      APP_DB_PASSWORD: ${APP_DB_PASSWORD:?Set APP_DB_PASSWORD for the new project database}
+      APP_COMMAND_PASSWORD: ${APP_COMMAND_PASSWORD:-}
+      APP_EXCHANGE_ENABLED: ${APP_EXCHANGE_ENABLED:-true}
+      APP_SECURE_COOKIE: ${APP_SECURE_COOKIE:-false}
+    ports:
+      - '127.0.0.1:${APP_PORT:-8080}:8080'
+    depends_on:
+      postgres:
+        condition: service_healthy
+      emulator:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - bash
+        - -ec
+        - >-
+          exec 3<>/dev/tcp/127.0.0.1/8080; printf 'GET /actuator/health HTTP/1.0\r\nHost: localhost\r\n\r\n' >&3; grep -q '"status":"UP"' <&3
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 30s
+    cpus: 0.75
+    mem_limit: 1536m
+  emulator-postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: emulator
+      POSTGRES_USER: emulator
+      POSTGRES_PASSWORD: ${APP_DB_PASSWORD:?Set APP_DB_PASSWORD for the new project database}
+    volumes:
+      - emulator-postgres:/var/lib/postgresql/data
+    cpus: 0.25
+    mem_limit: 256m
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U emulator -d emulator']
+      interval: 2s
+      timeout: 2s
+      retries: 30
+  emulator:
+    build: ./emulator
+    environment:
+      EMULATOR_DB_URL: jdbc:postgresql://emulator-postgres:5432/emulator
+      EMULATOR_DB_USER: emulator
+      EMULATOR_DB_PASSWORD: ${APP_DB_PASSWORD:?Set APP_DB_PASSWORD for the new project database}
+    ports:
+      - '127.0.0.1:${EMULATOR_PORT:-8090}:8090'
+    depends_on:
+      emulator-postgres:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - bash
+        - -ec
+        - >-
+          exec 3<>/dev/tcp/127.0.0.1/8090; printf 'GET /actuator/health HTTP/1.0\r\nHost: localhost\r\n\r\n' >&3; grep -q '"status":"UP"' <&3
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 30s
+    cpus: 0.25
+    mem_limit: 512m
+  frontend:
+    build: ./frontend
+    ports:
+      - '127.0.0.1:${FRONTEND_PORT:-5173}:80'
+    depends_on:
+      backend:
+        condition: service_healthy
+    cpus: 0.25
+    mem_limit: 128m
+    healthcheck:
+      test: [CMD, wget, -q, -O, /dev/null, 'http://127.0.0.1/']
+      interval: 5s
+      timeout: 3s
+      retries: 20
+volumes:
+  emulator-postgres:
+  backend-postgres:

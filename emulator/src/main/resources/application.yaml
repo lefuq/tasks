@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: ${EMULATOR_DB_URL}
+    username: ${EMULATOR_DB_USER}
+    password: ${EMULATOR_DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 5
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+server:
+  port: ${EMULATOR_PORT:8090}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+emulator:
+  worker: ${EMULATOR_WORKER:worker-1}
+  execution-enabled: ${EMULATOR_EXECUTION_ENABLED:true}

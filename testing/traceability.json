@@ -1,0 +1,1917 @@
+[
+  {
+    "test": "B-T001",
+    "requirement": "B-R001",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "migrationAndAssignmentIncludeReturnedButExcludeCompleted",
+    "task": "B-P04",
+    "level": "integration",
+    "coverage": "direct",
+    "limitation": "Фикстура начинает с пустых нагрузок и последовательных назначений, а не буквально 10:2/20:1; эквивалентное сравнение минимума подтверждено."
+  },
+  {
+    "test": "B-T002",
+    "requirement": "B-R002",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "migrationAndAssignmentIncludeReturnedButExcludeCompleted",
+    "task": "B-P04",
+    "level": "integration",
+    "coverage": "direct",
+    "limitation": "Равенство проверено на нулевой нагрузке; равенство при одном задании проверяется последующими назначениями."
+  },
+  {
+    "test": "B-T003",
+    "requirement": "B-R003",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "httpCreationWithoutOperatorIsAssignedByCreateOperatorCommand",
+    "task": "B-P04",
+    "level": "integration",
+    "coverage": "direct",
+    "limitation": "HTTP NEW и null operatorId проверены непосредственно."
+  },
+  {
+    "test": "B-T004",
+    "requirement": "B-R004",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "httpCreationWithoutOperatorIsAssignedByCreateOperatorCommand",
+    "task": "B-P04",
+    "level": "integration",
+    "coverage": "direct",
+    "limitation": "Назначение проверено вызовом Administration.createOperator; отдельный CLI-процесс не запускается."
+  },
+  {
+    "test": "B-T005",
+    "requirement": "B-R005",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "migrationAndAssignmentIncludeReturnedButExcludeCompleted",
+    "task": "B-P04",
+    "level": "integration",
+    "coverage": "direct",
+    "limitation": "RETURNED выставлен SQL-фикстурой, включение в нагрузку проверено следующим назначением."
+  },
+  {
+    "test": "B-T006",
+    "requirement": "B-R006",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "migrationAndAssignmentIncludeReturnedButExcludeCompleted",
+    "task": "B-P04",
+    "level": "integration",
+    "coverage": "direct",
+    "limitation": "COMPLETED выставлен SQL-фикстурой, исключение из нагрузки проверено следующим назначением."
+  },
+  {
+    "test": "B-T007",
+    "requirement": "B-R007",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "isolationIncludesHistoryAndFile",
+    "task": "B-P03",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "Прикладной/unit отказ сам по себе не проверяет HTTP-код и все таблицы; HTTP-матрица даёт отдельное доказательство."
+  },
+  {
+    "test": "B-T008",
+    "requirement": "B-R008",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "isolationIncludesHistoryAndFile",
+    "task": "B-P03",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "Прикладной/unit отказ сам по себе не проверяет HTTP-код и все таблицы; HTTP-матрица даёт отдельное доказательство."
+  },
+  {
+    "test": "B-T009",
+    "requirement": "B-R009",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "isolationIncludesHistoryAndFile",
+    "task": "B-P03",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "Прикладной/unit отказ сам по себе не проверяет HTTP-код и все таблицы; HTTP-матрица даёт отдельное доказательство."
+  },
+  {
+    "test": "B-T010",
+    "requirement": "B-R010",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskTest.java",
+    "method": "validatesBoundaries",
+    "task": "B-P05",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Метод validatesBoundaries проверяет 1/100/101; пустое имя покрыто rejectsInvalidName."
+  },
+  {
+    "test": "B-T011",
+    "requirement": "B-R011",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskTest.java",
+    "method": "validatesBoundaries",
+    "task": "B-P05",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Проверены 1000/1001 символов; пустое описание используется успешными созданиями в других методах."
+  },
+  {
+    "test": "B-T012",
+    "requirement": "B-R012",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "otherTypeIsRejectedByHttpDeserializationWithoutWrites",
+    "task": "B-P05",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "HTTP other и отсутствие записей проверены; три допустимых типа распределены по другим тестам, единой HTTP-параметризации нет."
+  },
+  {
+    "test": "B-T013",
+    "requirement": "B-R013",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskServiceTest.java",
+    "method": "returnAndUnchangedEditPreserveOperator",
+    "task": "B-P05",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Unit проверяет оператора/состояние, но не сохранённую историю и реальный внешний новый ключ; браузерная часть в frontend workflow."
+  },
+  {
+    "test": "B-T014",
+    "requirement": "B-R014",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "externalMockIsOutsideTransactionAndFailIsFinalAfterAcceptance",
+    "task": "B-P05",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "BackendIT использует mock внешнего результата; реальный внешний fail проверяется JointIT, браузер — frontend."
+  },
+  {
+    "test": "B-T015",
+    "requirement": "B-R015",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "concurrentIdenticalCommandsCreateOneTaskAndReturnTheSameResponse",
+    "task": "B-P06",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "Конкретный метод проверяет replay либо конфликт либо конкурентность; отдельный метод не доказывает все три условия."
+  },
+  {
+    "test": "B-T016",
+    "requirement": "B-R016",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "commandAndAuditRollbackWithQueueFailure",
+    "task": "B-P06",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "Rollback проверен BackendIT с SQL-ограничением; unit sendPersistsSnapshot проверяет вызовы store, а не фактический rollback."
+  },
+  {
+    "test": "B-T017",
+    "requirement": "B-R017",
+    "source": "backend/src/test/java/ru/tz/exchange/PersistenceIT.java",
+    "method": "databaseRestartPreservesScheduleKeySnapshotAuditAndIdempotency",
+    "task": "B-P06",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "Lease-тест не перезапускает процесс; freshWorker пересоздаёт объект; PersistenceIT перезапускает БД и проверяет сохранённые значения."
+  },
+  {
+    "test": "B-T018",
+    "requirement": "B-R018",
+    "source": "backend/src/test/java/ru/tz/exchange/ExchangeServiceTest.java",
+    "method": "stopsAfterSixTemporaryFailuresAndPreservesKey",
+    "task": "B-P07",
+    "level": "unit",
+    "coverage": "direct",
+    "limitation": "Пять задержек и шестой отказ проверены управляемыми значениями failures; физическое ожидание не требуется unit-сценарием."
+  },
+  {
+    "test": "B-T019",
+    "requirement": "B-R019",
+    "source": "backend/src/test/java/ru/tz/exchange/ExchangeServiceTest.java",
+    "method": "processingDoesNotSpendErrorBudget",
+    "task": "B-P07",
+    "level": "unit",
+    "coverage": "direct",
+    "limitation": "Десять 202 сохраняют failures=0, последующий 503 планирует первый повтор через 7 секунд."
+  },
+  {
+    "test": "B-T020",
+    "requirement": "B-R020",
+    "source": "backend/src/test/java/ru/tz/exchange/ResultTest.java",
+    "method": "rejectsInvalidResponses",
+    "task": "B-P08",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Валидация разделена между JSON-типами, синтаксисом, ID и подтверждением POST; отдельный метод покрывает только свои варианты, HTTP/UI проблемы не проверяются unit."
+  },
+  {
+    "test": "B-T021",
+    "requirement": "B-R021",
+    "source": "backend/src/test/java/ru/tz/exchange/ResultTest.java",
+    "method": "checksDecodedSizeAndAllowsEmptyFail",
+    "task": "B-P08",
+    "level": "unit",
+    "coverage": "direct",
+    "limitation": "Проверены декодированные 102400/102401 байт и пустой fail."
+  },
+  {
+    "test": "B-T022",
+    "requirement": "B-R022",
+    "source": "backend/src/test/java/ru/tz/exchange/JointIT.java",
+    "method": "heldRealResponseAndDuplicatePassTheActualHandlerWithValidReplayLeases",
+    "task": "B-P08",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "Unit/BackendIT работают с mock; JointIT получает реальный ответ и повторно применяет его с валидным захватом."
+  },
+  {
+    "test": "B-T023",
+    "requirement": "B-R023",
+    "source": "backend/src/test/java/ru/tz/exchange/JointIT.java",
+    "method": "heldRealResponseAndDuplicatePassTheActualHandlerWithValidReplayLeases",
+    "task": "B-P10",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "Unit/BackendIT не используют реальную сеть; JointIT удерживает реальный ответ старой операции."
+  },
+  {
+    "test": "B-T024",
+    "requirement": "B-R024",
+    "source": "backend/src/test/java/ru/tz/exchange/JointIT.java",
+    "method": "lostPostAcknowledgmentIsRecoveredThroughRealRepeatedPostWithoutSecondExecution",
+    "task": "B-P09",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "Unit проверяет планирование/транспортный признак; BackendIT mock восстанавливает snapshot; execution_count=1 подтверждается только JointIT."
+  },
+  {
+    "test": "B-T025",
+    "requirement": "B-R025",
+    "source": "backend/src/test/java/ru/tz/exchange/JointIT.java",
+    "method": "workerFailuresPreserveKeyAndLostResultCreatesNewOperation",
+    "task": "B-P09",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "Unit проверяет переход/новые ID; полная история и реальный счётчик подтверждаются JointIT, браузер отдельно."
+  },
+  {
+    "test": "B-T026",
+    "requirement": "B-R026",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "reconciliationPreservesBothResultsUntilExplicitAcceptanceAndCompletion",
+    "task": "B-P09",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "BackendIT reconciliationPreservesBothResults выполняет ручную сверку; автоматическая ветка проверяется freshWorker и ExchangeServiceTest, внешний ответ там mock."
+  },
+  {
+    "test": "B-T027",
+    "requirement": "B-R027",
+    "source": "backend/load/profile.py",
+    "method": "",
+    "task": "B-P11",
+    "level": "acceptance",
+    "coverage": "partial",
+    "limitation": "Результат зависит от отдельного свежего NF08; ссылка на генератор не подтверждает запуск."
+  },
+  {
+    "test": "B-T028",
+    "requirement": "B-R028",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskTest.java",
+    "method": "trimsNameAndAssignsWithoutSending",
+    "task": "B-P05",
+    "level": "unit",
+    "coverage": "direct",
+    "limitation": "TaskTest проверяет trim составного имени, NameContractTest 131 одиночный символ; комбинации не перебираются."
+  },
+  {
+    "test": "B-T029",
+    "requirement": "B-R029",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskTest.java",
+    "method": "rejectsInvalidName",
+    "task": "B-P05",
+    "level": "unit",
+    "coverage": "direct",
+    "limitation": "Семь запрещённых вариантов перечислены @ValueSource и каждый отклонён."
+  },
+  {
+    "test": "B-T030",
+    "requirement": "B-R030",
+    "source": "backend/src/test/java/ru/tz/exchange/ExchangeServiceTest.java",
+    "method": "permanentErrorsNeverRetry",
+    "task": "B-P07",
+    "level": "unit",
+    "coverage": "direct",
+    "limitation": "400/422/409 завершают работу и ни разу не вызывают reschedule; часы не продвигаются, отсутствие планирования доказано mock."
+  },
+  {
+    "test": "B-T031",
+    "requirement": "B-R031",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "reconciliationPreservesBothResultsUntilExplicitAcceptanceAndCompletion",
+    "task": "B-P09",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "Сохранность первого результата и второго наблюдения проверяется доменом/BackendIT; браузер и реальный противоречащий ответ относятся к QA-04."
+  },
+  {
+    "test": "B-T032",
+    "requirement": "B-R032",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "reconciliationPreservesBothResultsUntilExplicitAcceptanceAndCompletion",
+    "task": "B-P09",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "Unit/BackendIT подтверждают explicit accept после manual confirmation; браузерная история и принятие — QA-04."
+  },
+  {
+    "test": "E-T001",
+    "requirement": "E-R001",
+    "source": "emulator/src/test/java/ru/tz/emulator/HttpTest.java",
+    "method": "postIs202OnBothEndpoints",
+    "task": "E-P04",
+    "type": "unit",
+    "coverage": "partial",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "E-T002",
+    "requirement": "E-R002",
+    "source": "emulator/src/test/java/ru/tz/emulator/OperationsTest.java",
+    "method": "repeatKeepsIdTimerResultAndCountAcrossEndpoints",
+    "task": "E-P04",
+    "type": "unit",
+    "coverage": "partial",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "E-T003",
+    "requirement": "E-R003",
+    "source": "emulator/src/test/java/ru/tz/emulator/OperationsTest.java",
+    "method": "conflictDoesNotChangeOriginalSnapshot",
+    "task": "E-P04",
+    "type": "unit",
+    "coverage": "partial",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "E-T004",
+    "requirement": "E-R004",
+    "source": "emulator/src/test/java/ru/tz/emulator/EmulatorIT.java",
+    "method": "twentyConcurrentRequestsAcrossWorkersHaveOneExecutionAndConflictKeepsSnapshot",
+    "task": "E-P04",
+    "type": "integration",
+    "coverage": "direct",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "E-T005",
+    "requirement": "E-R005",
+    "source": "emulator/src/test/java/ru/tz/emulator/OperationsTest.java",
+    "method": "missingKeyAndUnknownOperation",
+    "task": "E-P06",
+    "type": "unit",
+    "coverage": "partial",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "E-T006",
+    "requirement": "E-R006",
+    "source": "emulator/src/test/java/ru/tz/emulator/HttpTest.java",
+    "method": "getSeparatesPendingAndCompletedAndAllowsAnyWorker",
+    "task": "E-P06",
+    "type": "unit",
+    "coverage": "partial",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "E-T007",
+    "requirement": "E-R007",
+    "source": "emulator/src/test/java/ru/tz/emulator/EmulatorIT.java",
+    "method": "retryDoesNotRestartTimerAndBothBusinessOutcomesAreSaved",
+    "task": "E-P06",
+    "type": "integration",
+    "coverage": "partial",
+    "scope": "Success, processing_time and decoded content checked; returned result.id not explicitly asserted here"
+  },
+  {
+    "test": "E-T008",
+    "requirement": "E-R008",
+    "source": "emulator/src/test/java/ru/tz/emulator/EmulatorIT.java",
+    "method": "retryDoesNotRestartTimerAndBothBusinessOutcomesAreSaved",
+    "task": "E-P06",
+    "type": "integration",
+    "coverage": "direct",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "E-T009",
+    "requirement": "E-R009",
+    "source": "emulator/src/test/java/ru/tz/emulator/EmulatorIT.java",
+    "method": "realExecutionWaitsWhilePostAndRepeatsRemainFast",
+    "task": "E-P05",
+    "type": "integration",
+    "coverage": "direct",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "E-T010",
+    "requirement": "E-R010",
+    "source": "emulator/src/test/java/ru/tz/emulator/EmulatorIT.java",
+    "method": "retryDoesNotRestartTimerAndBothBusinessOutcomesAreSaved",
+    "task": "E-P05",
+    "type": "integration",
+    "coverage": "direct",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "E-T011",
+    "requirement": "E-R011",
+    "source": "emulator/src/test/java/ru/tz/emulator/EmulatorIT.java",
+    "method": "pendingUnknownRepeatAndRestartPreserveTimelineAndIncludeDowntime",
+    "task": "E-P05",
+    "type": "integration",
+    "coverage": "partial",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "E-T012",
+    "requirement": "E-R012",
+    "source": "emulator/src/test/java/ru/tz/emulator/EmulatorIT.java",
+    "method": "savedResultSurvivesRealFiveSecondClientTimeoutAndRetryOnOtherWorker",
+    "task": "E-P07",
+    "type": "integration",
+    "coverage": "direct",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "E-T013",
+    "requirement": "E-R013",
+    "source": "emulator/src/test/java/ru/tz/emulator/EmulatorIT.java",
+    "method": "faultsPersistAcrossRestartAndNeverCorruptIndependentInspection",
+    "task": "E-P07",
+    "type": "integration",
+    "coverage": "direct",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "E-T014",
+    "requirement": "E-R014",
+    "source": "backend/src/test/java/ru/tz/exchange/JointIT.java",
+    "method": "",
+    "task": "E-P08",
+    "type": "acceptance",
+    "coverage": "direct",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "E-T015",
+    "requirement": "E-R015",
+    "source": "emulator/src/test/java/ru/tz/emulator/DomainTest.java",
+    "method": "truncatesEachTimestampBeforeSubtractionAndIncludesDowntime",
+    "task": "E-P05",
+    "type": "unit",
+    "coverage": "direct",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "E-T016",
+    "requirement": "E-R016",
+    "source": "emulator/src/test/java/ru/tz/emulator/HttpTest.java",
+    "method": "malformedAndMissingFieldsDoNotCreateOperations",
+    "task": "E-P04",
+    "type": "unit",
+    "coverage": "direct",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "E-T017",
+    "requirement": "E-R017",
+    "source": "emulator/src/test/java/ru/tz/emulator/HttpTest.java",
+    "method": "malformedAndMissingFieldsDoNotCreateOperations",
+    "task": "E-P04",
+    "type": "unit",
+    "coverage": "direct",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "E-T018",
+    "requirement": "E-R018",
+    "task": "E-P04",
+    "source": "emulator/src/test/java/ru/tz/emulator/NameContractTest.java",
+    "method": "acceptsEveryPermittedCharacter",
+    "type": "unit",
+    "coverage": "direct",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "B-T028",
+    "requirement": "B-R028",
+    "task": "B-P05",
+    "source": "backend/src/test/java/ru/tz/exchange/NameContractTest.java",
+    "method": "acceptsEveryPermittedCharacter",
+    "level": "unit",
+    "coverage": "direct",
+    "limitation": "TaskTest проверяет trim составного имени, NameContractTest 131 одиночный символ; комбинации не перебираются."
+  },
+  {
+    "test": "B-T033",
+    "requirement": "B-R033",
+    "task": "B-P01",
+    "source": "backend/src/test/java/ru/tz/exchange/ArchitectureTest.java",
+    "method": "dependenciesPointInward",
+    "level": "unit",
+    "coverage": "direct",
+    "limitation": "ArchUnit проверяет запрещённые зависимости домена, HTTP adapter и application."
+  },
+  {
+    "test": "B-T034",
+    "requirement": "B-R034",
+    "task": "B-P02",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "realSessionCookiePersistsAuthenticationRotatesAndLogsOut",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "Сессия и cookie реальные MockMvc/JDBC; пароль фикстуры password, не demo; истечение 30 минут не проверяется этим методом."
+  },
+  {
+    "test": "B-T035",
+    "requirement": "B-R035",
+    "task": "B-P03",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "loginCsrfSessionAndAuthorization",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "Основной loginCsrfSessionAndAuthorization выборочный; полная HTTP/CSRF матрица отдельными методами."
+  },
+  {
+    "test": "B-T036",
+    "requirement": "B-R036",
+    "task": "B-P04",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "parallelAssignmentIsSerializedAndCommandsDoNotLoseChanges",
+    "level": "integration",
+    "coverage": "direct",
+    "limitation": "20 конкурентных созданий дают 10/10; гонка edit/send допускает ровно одно успешное изменение."
+  },
+  {
+    "test": "B-T037",
+    "requirement": "B-R037",
+    "task": "B-P05",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskServiceTest.java",
+    "method": "versionConflictPreventsMutationAndQueue",
+    "level": "unit",
+    "coverage": "direct",
+    "limitation": "Устаревшая версия приводит к отказу до save/enqueue."
+  },
+  {
+    "test": "B-T038",
+    "requirement": "B-R038",
+    "task": "B-P06",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "externalMockIsOutsideTransactionAndFailIsFinalAfterAcceptance",
+    "level": "integration",
+    "coverage": "direct",
+    "limitation": "Mock external callback прямо проверяет отсутствие активной Spring-транзакции."
+  },
+  {
+    "test": "B-T039",
+    "requirement": "B-R039",
+    "task": "B-P07",
+    "source": "backend/src/test/java/ru/tz/exchange/WorkerClientTest.java",
+    "method": "createsPostAndEncodedGetWithFixedTimeout",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Проверяется request timeout 5 секунд; connect timeout 3 секунды не проверяется assertion."
+  },
+  {
+    "test": "B-T040",
+    "requirement": "B-R040",
+    "task": "B-P07",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskServiceTest.java",
+    "method": "manualRetryPreservesKeyAndRestartsQueue",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Проверяются сохранённый ключ и новая enqueue; фактическое прохождение всех повторов после ручного запуска не выполняется этим методом."
+  },
+  {
+    "test": "B-T041",
+    "requirement": "B-R041",
+    "task": "B-P08",
+    "source": "backend/src/test/java/ru/tz/exchange/ExchangeServiceTest.java",
+    "method": "expiredLeaseCannotApplyAResponse",
+    "level": "unit",
+    "coverage": "direct",
+    "limitation": "Истёкший захват не пишет attempt/save; сохранённая версия защищена отдельно BackendIT."
+  },
+  {
+    "test": "B-T042",
+    "requirement": "B-R042",
+    "task": "B-P11",
+    "source": "backend/src/test/java/ru/tz/exchange/AdministrationTest.java",
+    "method": "bootstrapRejectsInvalidEndpointsAndExistingState",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Mock показывает отказ повторного bootstrap до изменения; сохранность всей реальной БД требует интеграционной проверки."
+  },
+  {
+    "test": "E-T019",
+    "requirement": "E-R019",
+    "task": "E-P03",
+    "source": "emulator/src/test/java/ru/tz/emulator/EmulatorIT.java",
+    "method": "postgresRestartPreservesResultsAndConfiguration",
+    "type": "integration",
+    "coverage": "direct",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "E-T020",
+    "requirement": "E-R020",
+    "task": "E-P07",
+    "source": "emulator/src/test/java/ru/tz/emulator/FaultResponsesTest.java",
+    "method": "corruptionsAffectOnlyDeliveryAndLeaveSavedResultUntouched",
+    "type": "unit",
+    "coverage": "direct",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "E-T021",
+    "requirement": "E-R021",
+    "task": "E-P07",
+    "source": "emulator/src/test/java/ru/tz/emulator/OperationsTest.java",
+    "method": "forcedOutcomeIsIndependentOfType",
+    "type": "unit",
+    "coverage": "partial",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "E-T022",
+    "requirement": "E-R022",
+    "task": "E-P05",
+    "source": "emulator/src/test/java/ru/tz/emulator/DomainTest.java",
+    "method": "randomnessHasCorrectBoundsAndTwentyPercentFail",
+    "type": "unit",
+    "coverage": "direct",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "E-T023",
+    "requirement": "E-R023",
+    "task": "E-P09",
+    "source": "emulator/src/test/java/ru/tz/emulator/OperationsTest.java",
+    "method": "unavailableBlocksPublicRequestsButAllowsInspectionAndReset",
+    "type": "unit",
+    "coverage": "direct",
+    "scope": "Assertions in named method only; see testing/emulator/TEST_PLAN.md QA-01 audit"
+  },
+  {
+    "test": "B-T020",
+    "requirement": "B-R020",
+    "task": "B-P08",
+    "source": "backend/src/test/java/ru/tz/exchange/ResultContractTest.java",
+    "method": "rejectsNonIntegerDuration",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Валидация разделена между JSON-типами, синтаксисом, ID и подтверждением POST; отдельный метод покрывает только свои варианты, HTTP/UI проблемы не проверяются unit."
+  },
+  {
+    "test": "B-T020",
+    "requirement": "B-R020",
+    "task": "B-P08",
+    "source": "backend/src/test/java/ru/tz/exchange/ResultContractTest.java",
+    "method": "rejectsNonStringData",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Валидация разделена между JSON-типами, синтаксисом, ID и подтверждением POST; отдельный метод покрывает только свои варианты, HTTP/UI проблемы не проверяются unit."
+  },
+  {
+    "test": "E-T003",
+    "requirement": "E-R003",
+    "task": "E-P04",
+    "source": "emulator/src/test/java/ru/tz/emulator/HttpTest.java",
+    "method": "propagatesDomainErrorsAndHidesInternalErrors",
+    "type": "unit",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "E-T012",
+    "requirement": "E-R012",
+    "task": "E-P07",
+    "source": "emulator/src/test/java/ru/tz/emulator/HttpTest.java",
+    "method": "lostResponseIsScheduledOutsideRequestAndCanBeControlledWithoutSleep",
+    "type": "unit",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "E-T020",
+    "requirement": "E-R020",
+    "task": "E-P07",
+    "source": "emulator/src/test/java/ru/tz/emulator/HttpTest.java",
+    "method": "malformedResultIsReallyMalformedJson",
+    "type": "unit",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "E-T023",
+    "requirement": "E-R023",
+    "task": "E-P09",
+    "source": "emulator/src/test/java/ru/tz/emulator/HttpTest.java",
+    "method": "adminReadsActualStateAndConfiguresAndResetsFaults",
+    "type": "unit",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "E-T023",
+    "requirement": "E-R023",
+    "task": "E-P09",
+    "source": "emulator/src/test/java/ru/tz/emulator/HttpTest.java",
+    "method": "missingAdminSettingsAre422AndInvalidSettingsAre400",
+    "type": "unit",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "E-T017",
+    "requirement": "E-R017",
+    "task": "E-P04",
+    "source": "emulator/src/test/java/ru/tz/emulator/DomainTest.java",
+    "method": "validatesAndNormalizesSubmission",
+    "type": "unit",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "E-T018",
+    "requirement": "E-R018",
+    "task": "E-P04",
+    "source": "emulator/src/test/java/ru/tz/emulator/DomainTest.java",
+    "method": "rejectsInvalidNames",
+    "type": "unit",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "E-T018",
+    "requirement": "E-R018",
+    "task": "E-P04",
+    "source": "emulator/src/test/java/ru/tz/emulator/DomainTest.java",
+    "method": "rejectsLongName",
+    "type": "unit",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "E-T010",
+    "requirement": "E-R010",
+    "task": "E-P05",
+    "source": "emulator/src/test/java/ru/tz/emulator/DomainTest.java",
+    "method": "completesOnlyAtDeadlineAndKeepsOriginalResult",
+    "type": "unit",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "E-T008",
+    "requirement": "E-R008",
+    "task": "E-P06",
+    "source": "emulator/src/test/java/ru/tz/emulator/DomainTest.java",
+    "method": "failAlwaysHasEmptyData",
+    "type": "unit",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "E-T001",
+    "requirement": "E-R001",
+    "task": "E-P04",
+    "source": "emulator/src/test/java/ru/tz/emulator/OperationsTest.java",
+    "method": "acceptsWithDurableTimingAndOutcome",
+    "type": "unit",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "E-T023",
+    "requirement": "E-R023",
+    "task": "E-P09",
+    "source": "emulator/src/test/java/ru/tz/emulator/OperationsTest.java",
+    "method": "lostResultHidesPublicGetButPreservesInspectionAndIdempotentPost",
+    "type": "unit",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "E-T011",
+    "requirement": "E-R011",
+    "task": "E-P05",
+    "source": "emulator/src/test/java/ru/tz/emulator/OperationsTest.java",
+    "method": "completionUsesClockAndEmptiesFailData",
+    "type": "unit",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "E-T002",
+    "requirement": "E-R002",
+    "task": "E-P04",
+    "source": "emulator/src/test/java/ru/tz/emulator/EmulatorIT.java",
+    "method": "twentyConcurrentRequestsAcrossWorkersHaveOneExecutionAndConflictKeepsSnapshot",
+    "type": "integration",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "E-T003",
+    "requirement": "E-R003",
+    "task": "E-P04",
+    "source": "emulator/src/test/java/ru/tz/emulator/EmulatorIT.java",
+    "method": "twentyConcurrentRequestsAcrossWorkersHaveOneExecutionAndConflictKeepsSnapshot",
+    "type": "integration",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "E-T001",
+    "requirement": "E-R001",
+    "task": "E-P04",
+    "source": "emulator/src/test/java/ru/tz/emulator/EmulatorIT.java",
+    "method": "pendingUnknownRepeatAndRestartPreserveTimelineAndIncludeDowntime",
+    "type": "integration",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "E-T005",
+    "requirement": "E-R005",
+    "task": "E-P06",
+    "source": "emulator/src/test/java/ru/tz/emulator/EmulatorIT.java",
+    "method": "pendingUnknownRepeatAndRestartPreserveTimelineAndIncludeDowntime",
+    "type": "integration",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "E-T006",
+    "requirement": "E-R006",
+    "task": "E-P06",
+    "source": "emulator/src/test/java/ru/tz/emulator/EmulatorIT.java",
+    "method": "pendingUnknownRepeatAndRestartPreserveTimelineAndIncludeDowntime",
+    "type": "integration",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "E-T013",
+    "requirement": "E-R013",
+    "task": "E-P07",
+    "source": "emulator/src/test/java/ru/tz/emulator/EmulatorIT.java",
+    "method": "lostResultReturns404ForKnownIdAndSurvivesRestartWithoutLosingState",
+    "type": "integration",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "E-T013",
+    "requirement": "E-R013",
+    "task": "E-P07",
+    "source": "emulator/src/test/java/ru/tz/emulator/EmulatorIT.java",
+    "method": "upgradesExistingWorkerSettingsWithoutRewritingInitialMigration",
+    "type": "integration",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "E-T016",
+    "requirement": "E-R016",
+    "task": "E-P04",
+    "source": "emulator/src/test/java/ru/tz/emulator/EmulatorIT.java",
+    "method": "malformedOrMissingFieldsNeverReachRegistryAndConstraintsRejectInvalidState",
+    "type": "integration",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "E-T017",
+    "requirement": "E-R017",
+    "task": "E-P04",
+    "source": "emulator/src/test/java/ru/tz/emulator/EmulatorIT.java",
+    "method": "malformedOrMissingFieldsNeverReachRegistryAndConstraintsRejectInvalidState",
+    "type": "integration",
+    "coverage": "partial",
+    "scope": "Additional atomic assertion; does not independently prove full acceptance row"
+  },
+  {
+    "test": "F-T009",
+    "requirement": "F-R009",
+    "source": "frontend/src/shared/presentation.test.ts",
+    "method": "переводит UTC в пояс браузера с названием пояса",
+    "task": "F-P08",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T016",
+    "requirement": "F-R016",
+    "source": "frontend/src/shared/presentation.test.ts",
+    "method": "раскрывает вложенный JSON сверки и сохраняет неизвестные сообщения",
+    "task": "F-P07",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T010",
+    "requirement": "F-R010",
+    "source": "frontend/src/shared/presentation.test.ts",
+    "method": "скачивает .md без HTML, включая пустой файл",
+    "task": "F-P08",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T007",
+    "requirement": "F-R007",
+    "source": "frontend/src/shared/api/client.test.ts",
+    "method": "F-T007: повтор сохраняет ключ, завершение и новое действие получают новый",
+    "task": "F-P02",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T001",
+    "requirement": "F-R001",
+    "source": "frontend/src/shared/api/client.test.ts",
+    "method": "получает CSRF из 401 и обновляет после входа, передаёт cookie и версию",
+    "task": "F-P03",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T020",
+    "requirement": "F-R020",
+    "task": "F-P09",
+    "source": "frontend/src/shared/api/client.test.ts",
+    "method": "обрабатывает не-JSON, сеть и неверный успешный ответ",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T017",
+    "requirement": "F-R017",
+    "task": "F-P02",
+    "source": "frontend/src/shared/api/client.test.ts",
+    "method": "передаёт отмену, не выдавая её за сетевую ошибку",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T018",
+    "requirement": "F-R018",
+    "task": "F-P03",
+    "source": "frontend/src/shared/api/client.test.ts",
+    "method": "завершает сессию на 401 защищённого запроса",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T003",
+    "requirement": "F-R003",
+    "source": "frontend/src/shared/api/client.test.ts",
+    "method": "формирует пути, фильтр и методы по контракту",
+    "task": "F-P04",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T011",
+    "requirement": "F-R011",
+    "source": "frontend/src/shared/api/client.test.ts",
+    "method": "выход без тела и скачивание файла проходят единый HTTP слой",
+    "task": "F-P08",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T020",
+    "requirement": "F-R020",
+    "task": "F-P09",
+    "source": "frontend/src/shared/api/client.test.ts",
+    "method": "обрабатывает непроверенное тело ошибки %s",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T014",
+    "requirement": "F-R014",
+    "source": "frontend/src/features/tasks/model.test.ts",
+    "method": "обрезает Unicode-пробелы и сохраняет разрешённые символы",
+    "task": "F-P04",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T002",
+    "requirement": "F-R002",
+    "source": "frontend/src/features/tasks/model.test.ts",
+    "method": "проверяет имя %s",
+    "task": "F-P04",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T002",
+    "requirement": "F-R002",
+    "source": "frontend/src/features/tasks/model.test.ts",
+    "method": "проверяет описание длины %i",
+    "task": "F-P04",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T014",
+    "requirement": "F-R014",
+    "source": "frontend/src/features/tasks/name-contract.test.ts",
+    "method": "F-T014 / F-R014 / F-P04: разрешённый символ %s",
+    "task": "F-P04",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T001",
+    "requirement": "F-R001",
+    "source": "frontend/src/app/App.test.tsx",
+    "method": "F-T001: вход показывает пользователя и службу, выход скрывает защищённые данные",
+    "task": "F-P03",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T003",
+    "requirement": "F-R003",
+    "source": "frontend/src/app/App.test.tsx",
+    "method": "F-T003: фильтр сбрасывает страницу, пагинация следует API",
+    "task": "F-P04",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T018",
+    "requirement": "F-R018",
+    "task": "F-P03",
+    "source": "frontend/src/app/App.test.tsx",
+    "method": "истёкшая сессия удаляет реестр и показывает вход",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T019",
+    "requirement": "F-R019",
+    "task": "F-P06",
+    "source": "frontend/src/app/App.test.tsx",
+    "method": "оператору недоступна форма создания, даже по прямому адресу",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T013",
+    "requirement": "F-R013",
+    "source": "frontend/src/app/App.test.tsx",
+    "method": "список проблем использует API и не подменяет их локальным набором",
+    "task": "F-P06",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T007",
+    "requirement": "F-R007",
+    "source": "frontend/src/app/App.test.tsx",
+    "method": "создание после потери ответа повторяет сохранённый запрос и открывает подтверждённую карточку",
+    "task": "F-P02",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T004",
+    "requirement": "F-R004",
+    "source": "frontend/src/pages/TaskCard.test.tsx",
+    "method": "F-T004: не показывает подтверждённый переход до ответа",
+    "task": "F-P05",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T005",
+    "requirement": "F-R005",
+    "source": "frontend/src/pages/TaskCard.test.tsx",
+    "method": "F-T005: сохраняет возвращённое задание без изменения полей",
+    "task": "F-P06",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T006",
+    "requirement": "F-R006",
+    "source": "frontend/src/pages/TaskCard.test.tsx",
+    "method": "F-T006: принимает fail с пустой data, после подтверждения редактирования нет",
+    "task": "F-P06",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T007",
+    "requirement": "F-R007",
+    "source": "frontend/src/pages/TaskCard.test.tsx",
+    "method": "F-T007: безопасный повтор использует прежнее тело и ключ даже после обновления сервера",
+    "task": "F-P02",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T008",
+    "requirement": "F-R008",
+    "source": "frontend/src/pages/TaskCard.test.tsx",
+    "method": "F-T008: конфликт сохраняет введённый текст и запрещает повтор до обновления",
+    "task": "F-P07",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T013",
+    "requirement": "F-R013",
+    "source": "frontend/src/pages/TaskCard.test.tsx",
+    "method": "F-T013: показывает утерю и разрешённую новую отправку, использует серверный список исполнителей",
+    "task": "F-P06",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T013",
+    "requirement": "F-R013",
+    "source": "frontend/src/pages/TaskCard.test.tsx",
+    "method": "показывает неопределённость и только разрешённые сервером действия",
+    "task": "F-P06",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T010",
+    "requirement": "F-R010",
+    "source": "frontend/src/pages/TaskCard.test.tsx",
+    "method": "не вставляет содержимое результата в страницу",
+    "task": "F-P08",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T011",
+    "requirement": "F-R011",
+    "source": "frontend/src/pages/TaskCard.test.tsx",
+    "method": "не использует отдельный обход API для файлов",
+    "task": "F-P08",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T016",
+    "requirement": "F-R016",
+    "source": "frontend/src/pages/TaskCard.test.tsx",
+    "method": "F-T016: расхождение и оба наблюдения видны до принятия подтверждённого fail",
+    "task": "F-P07",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T021",
+    "requirement": "F-R021",
+    "task": "F-P02",
+    "source": "frontend/src/features/tasks/useTaskMutation.test.tsx",
+    "method": "ответ команды прежней сессии не заполняет кэш после выхода",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T014",
+    "requirement": "F-R014",
+    "source": "frontend/src/features/tasks/TaskForm.test.tsx",
+    "method": "F-T014: форма передаёт обрезанное имя и допускает пустое описание",
+    "task": "F-P04",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T015",
+    "requirement": "F-R015",
+    "source": "frontend/src/features/tasks/TaskForm.test.tsx",
+    "method": "F-T015: ошибка поля доступна по подписи, запрос не отправляется",
+    "task": "F-P04",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T001",
+    "requirement": "F-R001",
+    "source": "frontend/e2e/workflow.spec.ts",
+    "method": "F-T001/F-T012: создание, назначение, отправка, файл, принятие клавиатурой",
+    "task": "F-P03",
+    "type": "acceptance",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T005",
+    "requirement": "F-R005",
+    "source": "frontend/e2e/workflow.spec.ts",
+    "method": "F-T005: технически невалидный результат, возврат и сохранение без изменения полей",
+    "task": "F-P06",
+    "type": "acceptance",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T013",
+    "requirement": "F-R013",
+    "source": "frontend/e2e/workflow.spec.ts",
+    "method": "F-T013: утеря результата, смена исполнителя и новая операция",
+    "task": "F-P06",
+    "type": "acceptance",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T001",
+    "requirement": "F-R001",
+    "source": "frontend/e2e/workflow.spec.ts",
+    "method": "F-T001: сессия сохраняется после reload, выход закрывает прямой маршрут",
+    "task": "F-P03",
+    "type": "acceptance",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T012",
+    "requirement": "F-R012",
+    "source": "frontend/e2e/workflow.spec.ts",
+    "method": "F-T012: промежуточные ширины реестра и формы",
+    "task": "F-P09",
+    "type": "acceptance",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T003",
+    "requirement": "F-R003",
+    "source": "frontend/e2e/workflow.spec.ts",
+    "method": "F-T003: реальный фильтр и пагинация соответствуют API",
+    "task": "F-P04",
+    "type": "acceptance",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T016",
+    "requirement": "F-R016",
+    "source": "frontend/e2e/workflow.spec.ts",
+    "method": "F-T016: явное принятие противоречащего ответа тестового прокси",
+    "task": "F-P07",
+    "type": "acceptance",
+    "coverage": "partial"
+  },
+  {
+    "test": "E-T024",
+    "requirement": "E-R024",
+    "task": "E-P09",
+    "source": "emulator/src/test/java/ru/tz/emulator/HttpTest.java",
+    "method": "unexpectedFailureLogsDiagnosticWithoutRequestSecrets",
+    "type": "unit",
+    "coverage": "partial",
+    "scope": "Emulator logs only; authentication and CSRF diagnostics belong to backend"
+  },
+  {
+    "test": "E-T024",
+    "requirement": "E-R024",
+    "task": "E-P09",
+    "source": "emulator/src/test/java/ru/tz/emulator/EmulatorIT.java",
+    "method": "fullProcessLogsRetainFaultDiagnosticsWithoutSecrets",
+    "type": "integration",
+    "coverage": "partial",
+    "scope": "Emulator logs only; authentication and CSRF diagnostics belong to backend"
+  },
+  {
+    "test": "B-T004",
+    "requirement": "B-R004",
+    "task": "B-P04",
+    "source": "backend/src/test/java/ru/tz/exchange/AdministrationTest.java",
+    "method": "operatorCreationLocksServiceAndAssignsBacklog",
+    "level": "unit",
+    "coverage": "direct",
+    "limitation": "Назначение проверено вызовом Administration.createOperator; отдельный CLI-процесс не запускается."
+  },
+  {
+    "test": "B-T018",
+    "requirement": "B-R018",
+    "task": "B-P07",
+    "source": "backend/src/test/java/ru/tz/exchange/RetryPolicyTest.java",
+    "method": "hasFiveRetriesWithExactDelays",
+    "level": "unit",
+    "coverage": "direct",
+    "limitation": "Пять задержек и шестой отказ проверены управляемыми значениями failures; физическое ожидание не требуется unit-сценарием."
+  },
+  {
+    "test": "B-T024",
+    "requirement": "B-R024",
+    "task": "B-P09",
+    "source": "backend/src/test/java/ru/tz/exchange/WorkerClientTest.java",
+    "method": "networkFailureBecomesRetryableReply",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Unit проверяет планирование/транспортный признак; BackendIT mock восстанавливает snapshot; execution_count=1 подтверждается только JointIT."
+  },
+  {
+    "test": "B-T007",
+    "requirement": "B-R007",
+    "task": "B-P03",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskTest.java",
+    "method": "accessEnforcesServiceAuthorAndAssignment",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Прикладной/unit отказ сам по себе не проверяет HTTP-код и все таблицы; HTTP-матрица даёт отдельное доказательство."
+  },
+  {
+    "test": "B-T008",
+    "requirement": "B-R008",
+    "task": "B-P03",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskTest.java",
+    "method": "accessEnforcesServiceAuthorAndAssignment",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Прикладной/unit отказ сам по себе не проверяет HTTP-код и все таблицы; HTTP-матрица даёт отдельное доказательство."
+  },
+  {
+    "test": "B-T009",
+    "requirement": "B-R009",
+    "task": "B-P03",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskTest.java",
+    "method": "accessEnforcesServiceAuthorAndAssignment",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Прикладной/unit отказ сам по себе не проверяет HTTP-код и все таблицы; HTTP-матрица даёт отдельное доказательство."
+  },
+  {
+    "test": "B-T013",
+    "requirement": "B-R013",
+    "task": "B-P05",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskTest.java",
+    "method": "returnAndSaveWithoutChangesKeepsOperatorAndUsesNewOperation",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Unit проверяет оператора/состояние, но не сохранённую историю и реальный внешний новый ключ; браузерная часть в frontend workflow."
+  },
+  {
+    "test": "B-T014",
+    "requirement": "B-R014",
+    "task": "B-P05",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskTest.java",
+    "method": "failIsAcceptableAndCompletionIsImmutable",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "BackendIT использует mock внешнего результата; реальный внешний fail проверяется JointIT, браузер — frontend."
+  },
+  {
+    "test": "B-T040",
+    "requirement": "B-R040",
+    "task": "B-P07",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskTest.java",
+    "method": "workerChangeRequiresTemporaryErrorOrLostResult",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Проверяются сохранённый ключ и новая enqueue; фактическое прохождение всех повторов после ручного запуска не выполняется этим методом."
+  },
+  {
+    "test": "B-T037",
+    "requirement": "B-R037",
+    "task": "B-P05",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskTest.java",
+    "method": "workerChangeRequiresTemporaryErrorOrLostResult",
+    "level": "unit",
+    "coverage": "direct",
+    "limitation": "Устаревшая версия приводит к отказу до save/enqueue."
+  },
+  {
+    "test": "B-T025",
+    "requirement": "B-R025",
+    "task": "B-P09",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskTest.java",
+    "method": "lostResultAllowsNewSendButNotRetry",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Unit проверяет переход/новые ID; полная история и реальный счётчик подтверждаются JointIT, браузер отдельно."
+  },
+  {
+    "test": "B-T031",
+    "requirement": "B-R031",
+    "task": "B-P09",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskTest.java",
+    "method": "invalidReconciliationBeforeAcceptanceAllowsReturnRetryAndReconciliation",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Сохранность первого результата и второго наблюдения проверяется доменом/BackendIT; браузер и реальный противоречащий ответ относятся к QA-04."
+  },
+  {
+    "test": "B-T040",
+    "requirement": "B-R040",
+    "task": "B-P07",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskTest.java",
+    "method": "invalidReconciliationBeforeAcceptanceAllowsReturnRetryAndReconciliation",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Проверяются сохранённый ключ и новая enqueue; фактическое прохождение всех повторов после ручного запуска не выполняется этим методом."
+  },
+  {
+    "test": "B-T025",
+    "requirement": "B-R025",
+    "task": "B-P09",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskTest.java",
+    "method": "lostResultBeforeAcceptanceCanBeResentWithNewOperation",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Unit проверяет переход/новые ID; полная история и реальный счётчик подтверждаются JointIT, браузер отдельно."
+  },
+  {
+    "test": "B-T001",
+    "requirement": "B-R001",
+    "task": "B-P04",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskServiceTest.java",
+    "method": "creationAuditsNewBeforeAssignment",
+    "level": "unit",
+    "coverage": "direct",
+    "limitation": "Фикстура начинает с пустых нагрузок и последовательных назначений, а не буквально 10:2/20:1; эквивалентное сравнение минимума подтверждено."
+  },
+  {
+    "test": "B-T015",
+    "requirement": "B-R015",
+    "task": "B-P06",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskServiceTest.java",
+    "method": "replayReturnsSavedResponseWithoutBusinessEffect",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Конкретный метод проверяет replay либо конфликт либо конкурентность; отдельный метод не доказывает все три условия."
+  },
+  {
+    "test": "B-T016",
+    "requirement": "B-R016",
+    "task": "B-P06",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskServiceTest.java",
+    "method": "sendPersistsSnapshotAndQueueBeforeReturning",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Rollback проверен BackendIT с SQL-ограничением; unit sendPersistsSnapshot проверяет вызовы store, а не фактический rollback."
+  },
+  {
+    "test": "B-T040",
+    "requirement": "B-R040",
+    "task": "B-P07",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskServiceTest.java",
+    "method": "retryKeepsOperationKeyAndWorkerSwitchStartsFreshBudget",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Проверяются сохранённый ключ и новая enqueue; фактическое прохождение всех повторов после ручного запуска не выполняется этим методом."
+  },
+  {
+    "test": "B-T025",
+    "requirement": "B-R025",
+    "task": "B-P09",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskServiceTest.java",
+    "method": "lostResultCreatesDifferentOperationAndKey",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Unit проверяет переход/новые ID; полная история и реальный счётчик подтверждаются JointIT, браузер отдельно."
+  },
+  {
+    "test": "B-T032",
+    "requirement": "B-R032",
+    "task": "B-P09",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskServiceTest.java",
+    "method": "acceptsOnlyManuallyConfirmedMismatch",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Unit/BackendIT подтверждают explicit accept после manual confirmation; браузерная история и принятие — QA-04."
+  },
+  {
+    "test": "B-T004",
+    "requirement": "B-R004",
+    "task": "B-P04",
+    "source": "backend/src/test/java/ru/tz/exchange/TaskServiceTest.java",
+    "method": "backlogUsesFreshLoadForEveryAssignment",
+    "level": "unit",
+    "coverage": "direct",
+    "limitation": "Назначение проверено вызовом Administration.createOperator; отдельный CLI-процесс не запускается."
+  },
+  {
+    "test": "B-T024",
+    "requirement": "B-R024",
+    "task": "B-P09",
+    "source": "backend/src/test/java/ru/tz/exchange/ExchangeServiceTest.java",
+    "method": "unknownDeliverySchedulesAutomaticReconciliation",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Unit проверяет планирование/транспортный признак; BackendIT mock восстанавливает snapshot; execution_count=1 подтверждается только JointIT."
+  },
+  {
+    "test": "B-T026",
+    "requirement": "B-R026",
+    "task": "B-P09",
+    "source": "backend/src/test/java/ru/tz/exchange/ExchangeServiceTest.java",
+    "method": "unknownDeliverySchedulesAutomaticReconciliation",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "BackendIT reconciliationPreservesBothResults выполняет ручную сверку; автоматическая ветка проверяется freshWorker и ExchangeServiceTest, внешний ответ там mock."
+  },
+  {
+    "test": "B-T025",
+    "requirement": "B-R025",
+    "task": "B-P09",
+    "source": "backend/src/test/java/ru/tz/exchange/ExchangeServiceTest.java",
+    "method": "knownId404RequiresNewOperation",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Unit проверяет переход/новые ID; полная история и реальный счётчик подтверждаются JointIT, браузер отдельно."
+  },
+  {
+    "test": "B-T023",
+    "requirement": "B-R023",
+    "task": "B-P10",
+    "source": "backend/src/test/java/ru/tz/exchange/ExchangeServiceTest.java",
+    "method": "staleOperationDoesNotReplaceCurrentState",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Unit/BackendIT не используют реальную сеть; JointIT удерживает реальный ответ старой операции."
+  },
+  {
+    "test": "B-T022",
+    "requirement": "B-R022",
+    "task": "B-P08",
+    "source": "backend/src/test/java/ru/tz/exchange/ExchangeServiceTest.java",
+    "method": "duplicateHasOneBusinessEffect",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Unit/BackendIT работают с mock; JointIT получает реальный ответ и повторно применяет его с валидным захватом."
+  },
+  {
+    "test": "B-T031",
+    "requirement": "B-R031",
+    "task": "B-P09",
+    "source": "backend/src/test/java/ru/tz/exchange/ExchangeServiceTest.java",
+    "method": "completedReconciliationPreservesAcceptedResult",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Сохранность первого результата и второго наблюдения проверяется доменом/BackendIT; браузер и реальный противоречащий ответ относятся к QA-04."
+  },
+  {
+    "test": "B-T032",
+    "requirement": "B-R032",
+    "task": "B-P09",
+    "source": "backend/src/test/java/ru/tz/exchange/ExchangeServiceTest.java",
+    "method": "completedReconciliationPreservesAcceptedResult",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Unit/BackendIT подтверждают explicit accept после manual confirmation; браузерная история и принятие — QA-04."
+  },
+  {
+    "test": "B-T031",
+    "requirement": "B-R031",
+    "task": "B-P09",
+    "source": "backend/src/test/java/ru/tz/exchange/ExchangeServiceTest.java",
+    "method": "automaticMismatchRequiresManualConfirmation",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Сохранность первого результата и второго наблюдения проверяется доменом/BackendIT; браузер и реальный противоречащий ответ относятся к QA-04."
+  },
+  {
+    "test": "B-T032",
+    "requirement": "B-R032",
+    "task": "B-P09",
+    "source": "backend/src/test/java/ru/tz/exchange/ExchangeServiceTest.java",
+    "method": "automaticMismatchRequiresManualConfirmation",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Unit/BackendIT подтверждают explicit accept после manual confirmation; браузерная история и принятие — QA-04."
+  },
+  {
+    "test": "B-T020",
+    "requirement": "B-R020",
+    "task": "B-P08",
+    "source": "backend/src/test/java/ru/tz/exchange/ExchangeServiceTest.java",
+    "method": "invalidPostAcknowledgmentRequiresReviewWithoutReturnToAuthor",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Валидация разделена между JSON-типами, синтаксисом, ID и подтверждением POST; отдельный метод покрывает только свои варианты, HTTP/UI проблемы не проверяются unit."
+  },
+  {
+    "test": "B-T031",
+    "requirement": "B-R031",
+    "task": "B-P09",
+    "source": "backend/src/test/java/ru/tz/exchange/ExchangeServiceTest.java",
+    "method": "matchingCompletedReconciliationClosesProblemAndPreservesAcceptedResult",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Сохранность первого результата и второго наблюдения проверяется доменом/BackendIT; браузер и реальный противоречащий ответ относятся к QA-04."
+  },
+  {
+    "test": "B-T032",
+    "requirement": "B-R032",
+    "task": "B-P09",
+    "source": "backend/src/test/java/ru/tz/exchange/ExchangeServiceTest.java",
+    "method": "matchingCompletedReconciliationClosesProblemAndPreservesAcceptedResult",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Unit/BackendIT подтверждают explicit accept после manual confirmation; браузерная история и принятие — QA-04."
+  },
+  {
+    "test": "B-T020",
+    "requirement": "B-R020",
+    "task": "B-P08",
+    "source": "backend/src/test/java/ru/tz/exchange/ResultTest.java",
+    "method": "rejectsWrongIdAndPreservesConflictingObservations",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Валидация разделена между JSON-типами, синтаксисом, ID и подтверждением POST; отдельный метод покрывает только свои варианты, HTTP/UI проблемы не проверяются unit."
+  },
+  {
+    "test": "B-T031",
+    "requirement": "B-R031",
+    "task": "B-P09",
+    "source": "backend/src/test/java/ru/tz/exchange/ResultTest.java",
+    "method": "rejectsWrongIdAndPreservesConflictingObservations",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Сохранность первого результата и второго наблюдения проверяется доменом/BackendIT; браузер и реальный противоречащий ответ относятся к QA-04."
+  },
+  {
+    "test": "B-T020",
+    "requirement": "B-R020",
+    "task": "B-P08",
+    "source": "backend/src/test/java/ru/tz/exchange/ResultTest.java",
+    "method": "validatesAcknowledgment",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Валидация разделена между JSON-типами, синтаксисом, ID и подтверждением POST; отдельный метод покрывает только свои варианты, HTTP/UI проблемы не проверяются unit."
+  },
+  {
+    "test": "B-T031",
+    "requirement": "B-R031",
+    "task": "B-P09",
+    "source": "backend/src/test/java/ru/tz/exchange/ResultTest.java",
+    "method": "retryAndTransportErrorsCannotEraseAnUnresolvedMismatch",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Сохранность первого результата и второго наблюдения проверяется доменом/BackendIT; браузер и реальный противоречащий ответ относятся к QA-04."
+  },
+  {
+    "test": "B-T032",
+    "requirement": "B-R032",
+    "task": "B-P09",
+    "source": "backend/src/test/java/ru/tz/exchange/ResultTest.java",
+    "method": "retryAndTransportErrorsCannotEraseAnUnresolvedMismatch",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Unit/BackendIT подтверждают explicit accept после manual confirmation; браузерная история и принятие — QA-04."
+  },
+  {
+    "test": "B-T032",
+    "requirement": "B-R032",
+    "task": "B-P09",
+    "source": "backend/src/test/java/ru/tz/exchange/ResultTest.java",
+    "method": "firstManualMismatchRequiresAConfirmingReconciliation",
+    "level": "unit",
+    "coverage": "partial",
+    "limitation": "Unit/BackendIT подтверждают explicit accept после manual confirmation; браузерная история и принятие — QA-04."
+  },
+  {
+    "test": "B-T015",
+    "requirement": "B-R015",
+    "task": "B-P06",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "idempotencyConflictAndPagination",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "Конкретный метод проверяет replay либо конфликт либо конкурентность; отдельный метод не доказывает все три условия."
+  },
+  {
+    "test": "B-T017",
+    "requirement": "B-R017",
+    "task": "B-P06",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "persistedLeaseRecoveryRejectsPriorOwner",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "Lease-тест не перезапускает процесс; freshWorker пересоздаёт объект; PersistenceIT перезапускает БД и проверяет сохранённые значения."
+  },
+  {
+    "test": "B-T041",
+    "requirement": "B-R041",
+    "task": "B-P08",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "persistedLeaseRecoveryRejectsPriorOwner",
+    "level": "integration",
+    "coverage": "direct",
+    "limitation": "Истёкший захват не пишет attempt/save; сохранённая версия защищена отдельно BackendIT."
+  },
+  {
+    "test": "B-T022",
+    "requirement": "B-R022",
+    "task": "B-P08",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "duplicateAndHeldOldResponseUseSameApplicationHandler",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "Unit/BackendIT работают с mock; JointIT получает реальный ответ и повторно применяет его с валидным захватом."
+  },
+  {
+    "test": "B-T023",
+    "requirement": "B-R023",
+    "task": "B-P10",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "duplicateAndHeldOldResponseUseSameApplicationHandler",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "Unit/BackendIT не используют реальную сеть; JointIT удерживает реальный ответ старой операции."
+  },
+  {
+    "test": "B-T017",
+    "requirement": "B-R017",
+    "task": "B-P06",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "freshWorkerRestoresUnknownDeliveryUsingPersistedKeyAndSnapshot",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "Lease-тест не перезапускает процесс; freshWorker пересоздаёт объект; PersistenceIT перезапускает БД и проверяет сохранённые значения."
+  },
+  {
+    "test": "B-T024",
+    "requirement": "B-R024",
+    "task": "B-P09",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "freshWorkerRestoresUnknownDeliveryUsingPersistedKeyAndSnapshot",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "Unit проверяет планирование/транспортный признак; BackendIT mock восстанавливает snapshot; execution_count=1 подтверждается только JointIT."
+  },
+  {
+    "test": "B-T026",
+    "requirement": "B-R026",
+    "task": "B-P09",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "freshWorkerRestoresUnknownDeliveryUsingPersistedKeyAndSnapshot",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "BackendIT reconciliationPreservesBothResults выполняет ручную сверку; автоматическая ветка проверяется freshWorker и ExchangeServiceTest, внешний ответ там mock."
+  },
+  {
+    "test": "B-T007",
+    "requirement": "B-R007",
+    "task": "B-P03",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "negativeHttpMatrixPreservesEveryBusinessTable",
+    "level": "integration",
+    "coverage": "direct",
+    "limitation": "Проверены HTTP-коды/фильтрация и snapshot восьми бизнес-таблиц; используются валидные версии и существующие задания."
+  },
+  {
+    "test": "B-T008",
+    "requirement": "B-R008",
+    "task": "B-P03",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "negativeHttpMatrixPreservesEveryBusinessTable",
+    "level": "integration",
+    "coverage": "direct",
+    "limitation": "Проверены HTTP-коды/фильтрация и snapshot восьми бизнес-таблиц; используются валидные версии и существующие задания."
+  },
+  {
+    "test": "B-T009",
+    "requirement": "B-R009",
+    "task": "B-P03",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "negativeHttpMatrixPreservesEveryBusinessTable",
+    "level": "integration",
+    "coverage": "direct",
+    "limitation": "Проверены HTTP-коды/фильтрация и snapshot восьми бизнес-таблиц; используются валидные версии и существующие задания."
+  },
+  {
+    "test": "B-T035",
+    "requirement": "B-R035",
+    "task": "B-P03",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "negativeHttpMatrixPreservesEveryBusinessTable",
+    "level": "integration",
+    "coverage": "direct",
+    "limitation": "Проверены HTTP-коды/фильтрация и snapshot восьми бизнес-таблиц; используются валидные версии и существующие задания."
+  },
+  {
+    "test": "B-T035",
+    "requirement": "B-R035",
+    "task": "B-P03",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "allProtectedHttpEndpointsRejectAnonymousAndMutationsRejectMissingCsrf",
+    "level": "integration",
+    "coverage": "direct",
+    "limitation": "Проверены HTTP-коды/фильтрация и snapshot восьми бизнес-таблиц; используются валидные версии и существующие задания."
+  },
+  {
+    "test": "B-T007",
+    "requirement": "B-R007",
+    "task": "B-P03",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "problemListFiltersAuthorsAndServicesButIncludesUnassignedOperators",
+    "level": "integration",
+    "coverage": "direct",
+    "limitation": "Проверены HTTP-коды/фильтрация и snapshot восьми бизнес-таблиц; используются валидные версии и существующие задания."
+  },
+  {
+    "test": "B-T008",
+    "requirement": "B-R008",
+    "task": "B-P03",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "problemListFiltersAuthorsAndServicesButIncludesUnassignedOperators",
+    "level": "integration",
+    "coverage": "direct",
+    "limitation": "Проверены HTTP-коды/фильтрация и snapshot восьми бизнес-таблиц; используются валидные версии и существующие задания."
+  },
+  {
+    "test": "B-T043",
+    "requirement": "B-R043",
+    "task": "B-P02",
+    "source": "backend/src/test/java/ru/tz/exchange/BackendIT.java",
+    "method": "diagnosticsContainFailuresButNoSecretMarkers",
+    "level": "integration",
+    "coverage": "partial",
+    "limitation": "BackendIT mock транспорт, JointIT реальная сеть; в обоих случаях auth/CSRF через MockMvc, журналы полного процесса."
+  },
+  {
+    "test": "F-T011",
+    "requirement": "F-R011",
+    "source": "frontend/src/shared/presentation.test.ts",
+    "method": "скачивает .md без HTML, включая пустой файл",
+    "task": "F-P08",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T014",
+    "requirement": "F-R014",
+    "source": "frontend/src/features/tasks/model.test.ts",
+    "method": "проверяет имя %s",
+    "task": "F-P04",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T015",
+    "requirement": "F-R015",
+    "source": "frontend/src/features/tasks/model.test.ts",
+    "method": "проверяет имя %s",
+    "task": "F-P04",
+    "type": "unit",
+    "coverage": "partial"
+  },
+  {
+    "test": "F-T012",
+    "requirement": "F-R012",
+    "source": "frontend/e2e/workflow.spec.ts",
+    "method": "F-T001/F-T012: создание, назначение, отправка, файл, принятие клавиатурой",
+    "task": "F-P09",
+    "type": "acceptance",
+    "coverage": "partial"
+  },
+  {
+    "test": "B-T043",
+    "requirement": "B-R043",
+    "task": "B-P02",
+    "source": "backend/src/test/java/ru/tz/exchange/JointIT.java",
+    "method": "completeProcessLogsRejectSecretsDuringRealFailures",
+    "level": "integration",
+    "coverage": "direct",
+    "limitation": "BackendIT mock транспорт, JointIT реальная сеть; в обоих случаях auth/CSRF через MockMvc, журналы полного процесса."
+  },
+  {
+    "test": "F-T013",
+    "requirement": "F-R013",
+    "task": "F-P06",
+    "source": "frontend/e2e/workflow.spec.ts",
+    "method": "F-T013: восстановление ${fault} прежней операцией",
+    "type": "acceptance",
+    "coverage": "partial",
+    "limitation": "Проверяет конкретную ветвь восстановления; не заменяет lost_result→новую операцию."
+  },
+  {
+    "test": "F-T013",
+    "requirement": "F-R013",
+    "task": "F-P06",
+    "source": "frontend/e2e/workflow.spec.ts",
+    "method": "F-T013: после исчерпания автоматических попыток разрешён ручной повтор",
+    "type": "acceptance",
+    "coverage": "partial",
+    "limitation": "Проверяет конкретную ветвь восстановления; не заменяет lost_result→новую операцию."
+  },
+  {
+    "test": "F-T013",
+    "requirement": "F-R013",
+    "task": "F-P06",
+    "source": "frontend/e2e/workflow.spec.ts",
+    "method": "F-T013: восстановление сменой исполнителя после ${exhausted",
+    "type": "acceptance",
+    "coverage": "partial",
+    "limitation": "Смена исполнителя после первой временной ошибки и исчерпания; не проверяет lost_result."
+  }
+]
